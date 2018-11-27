@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp", "MyWebApp\MyWebApp.csproj", "{5FB185DD-B9AB-454C-BFF2-22511DEA14AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTestMVC", "..\MVC\MyTestMVC\MyTestMVC.csproj", "{CD945435-9B67-4949-AA7E-635FDBB99D39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTestMVC", "MVC\MyTestMVC.csproj", "{CD945435-9B67-4949-AA7E-635FDBB99D39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
