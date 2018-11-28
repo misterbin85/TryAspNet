@@ -1,57 +1,65 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using StudentsExam.Entities;
 using StudentsExam.Factories;
 
 namespace StudentsExam
 {
-	public class AuthenticationHelper
-	{
-		private IUser SelectUserType()
-		{
-			Console.WriteLine($"Please select:{Environment.NewLine} 1 - you are a Teacher {Environment.NewLine} 2 - you are a Student");
+    public class AuthenticationHelper
+    {
+        private readonly string _nl = Environment.NewLine;
 
-			Int32.TryParse(Console.ReadLine(), out int choice);
-			if (choice == 0 || choice > 2)
-			{
-				Console.WriteLine("Please select only mentioned numbers. Trying again:");
-				SelectUserType();
-			}
+        public IUser Authenticate()
+        {
+            var allowedUsers = new Users(ConfigurationManager.AppSettings["LoginUsers"]);
 
-			return UsersFactory.GetUser(choice);
-		}
+            IUser user = this.SelectUserType();
 
-		private IUser GetCredentials(IUser user)
-		{
-			Console.WriteLine($"You're trying to login as a:'{user.GetType().Name}'.");
-			Console.WriteLine("Please enter your Name:");
-			user.Name = Console.ReadLine();
-			Console.WriteLine("Please enter your Email:");
-			user.Email = Console.ReadLine();
+            user = this.GetCredentials(user);
+            IUser authUser;
+            if (user.GetType() == typeof(Student))
+            {
+                authUser = allowedUsers.Students.FirstOrDefault(student => student.Name.Equals(user.Name) && student.Email.Equals(user.Email));
+            }
+            else
+            {
+                authUser = allowedUsers.Teachers.FirstOrDefault(teacher => teacher.Name.Equals(user.Name) && teacher.Email.Equals(user.Email));
+            }
 
-			return user;
-		}
+            if (authUser == null)
+            {
+                Console.WriteLine("Selected User wasn't found. Please try again");
+                return Authenticate();
+            }
 
-		public IUser Authenticate()
-		{
-			var allowedUsers = new Users(ConfigurationManager.AppSettings["LoginUsers"]);
+            return authUser;
+        }
 
-			IUser user = this.SelectUserType();
+        private IUser SelectUserType()
+        {
+            Console.WriteLine($"Please select:{_nl} 1 - you are a Teacher {_nl} 2 - you are a Student{_nl} And hit Enter...");
+            string userInput = Console.ReadLine();
+            bool res = int.TryParse(userInput, out int choice);
 
-			user = this.GetCredentials(user);
-			IUser authUser;
-			if (user.GetType() == typeof(Student))
-			{
-				authUser = allowedUsers.Students.Single(student => student.Name.Equals(user.Name) && student.Email.Equals(user.Email));
-			}
-			else
-			{
-				authUser = allowedUsers.Teachers.Single(teacher => teacher.Name.Equals(user.Name) && teacher.Email.Equals(user.Email));
-			}
+            if (!res || choice > 2)
+            {
+                Console.WriteLine("Please select only mentioned numbers. Trying again:");
+                return SelectUserType();
+            }
 
-			return authUser;
-		}
-	}
+            return UsersFactory.GetUser(choice);
+        }
+
+        private IUser GetCredentials(IUser user)
+        {
+            Console.WriteLine($"You're trying to login as a:'{user.GetType().Name}'.");
+            Console.WriteLine("Please enter your Name:");
+            user.Name = Console.ReadLine();
+            Console.WriteLine("Please enter your Email:");
+            user.Email = Console.ReadLine();
+
+            return user;
+        }
+    }
 }
