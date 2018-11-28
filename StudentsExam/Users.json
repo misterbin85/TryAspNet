@@ -1,0 +1,14 @@
+{
+  "Teachers":
+  [
+    {"Name":"Teacher_1", "Email":"Teacher_1@mail.com"},
+    {"Name":"Teacher_2", "Email":"Teacher_2@mail.com"},
+    {"Name":"Teacher_3", "Email":"Teacher_3@mail.com"}
+  ],
+  "Students":
+  [
+    {"Name":"Student_1", "Email":"Student_1@mail.com"},
+    {"Name":"Student_2", "Email":"Student_2@mail.com"},
+    {"Name":"Student_3", "Email":"Student_3@mail.com"}
+  ]
+}
