@@ -13,10 +13,9 @@ namespace StudentsExam.FileUtils
 			return JObject.Parse(File.ReadAllText($@"{ExeDir}\JSONs\{fileName}.json"));
 		}
 
-		public static void SaveJsonToFile(string jsonString)
+		public static void SaveJsonToFile(string fileName, string jsonString)
 		{
-			var fileName = "Test"; // temporary hardcoded for testing
-			File.WriteAllText($@"{ExeDir}\JSONs\{fileName}.json", jsonString);
+			File.WriteAllText($@"{ExeDir}\JSONs\{fileName}_result.json", jsonString);
 		}
 	}
 }

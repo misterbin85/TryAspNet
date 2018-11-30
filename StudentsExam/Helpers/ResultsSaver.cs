@@ -2,21 +2,42 @@
 using StudentsExam.Entities;
 using StudentsExam.FileUtils;
 using System;
+using System.Linq;
 
 namespace StudentsExam.Helpers
 {
-	public class ResultsSaver
+	public class QuizResultsSaver
 	{
-		public ResultsSaver(Quiz quiz)
+		private readonly Quiz quiz;
+
+		public QuizResultsSaver(Quiz quiz)
+		{
+			this.quiz = quiz;
+		}
+
+		public void SubscribeToQuiz()
 		{
 			quiz.QuizFinisHandler += SaveResults;
 		}
 
 		private void SaveResults(object sender, EventArgs e)
 		{
-			var jsonString = JsonConvert.SerializeObject(((CustomArgs)e).Answers);
+			var user = ((CustomArgs)e).Answers.First().UserName;
 
-			JsonUtils.SaveJsonToFile(jsonString);
+			var resultObject = new
+			{
+				UserName = user,
+				Answers = ((CustomArgs)e).Answers.Select(answer => new
+				{
+					QuestionText = answer.QuestionText,
+					AnswerText = answer.AnswerText,
+					IsCorrect = answer.IsCorrect
+				}).ToList()
+			};
+
+			var jsonString = JsonConvert.SerializeObject(resultObject);
+
+			JsonUtils.SaveJsonToFile(user, jsonString);
 		}
 	}
 }

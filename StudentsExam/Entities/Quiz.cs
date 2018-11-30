@@ -13,14 +13,24 @@ namespace StudentsExam.Entities
 
 		private readonly string nl = Environment.NewLine;
 
+		public readonly IUser User;
+
 		public event EventHandler QuizFinisHandler;
 
-		public void QuizFinish(List<UserAnswer> answers)
+		#region Constructor
+
+		public Quiz(IUser user)
 		{
-			QuizFinisHandler?.Invoke(this, new CustomArgs(answers));
+			User = user;
+			var resultsSaver = new QuizResultsSaver(this);
+			resultsSaver.SubscribeToQuiz();
 		}
 
-		public List<UserAnswer> StartQuiz(IUser user)
+		#endregion Constructor
+
+		#region Methods
+
+		public void StartQuiz()
 		{
 			Console.WriteLine($"{nl}   Please answer following questions using numbers from 1 to 4 ONLY !");
 			List<UserAnswer> answers = new List<UserAnswer>();
@@ -34,15 +44,22 @@ namespace StudentsExam.Entities
 					Console.WriteLine($" - {answer.Number}. {answer.Text} {nl}");
 				}
 
-				Console.WriteLine("Enter your choice...");
+				Console.WriteLine($"{nl} Enter your choice...");
 
 				if (int.TryParse(Console.ReadLine(), out int answerNumber))
 				{
-					answers.Add(new UserAnswer(user, question, answerNumber));
+					answers.Add(new UserAnswer(User, question, answerNumber));
 				}
 			}
 
-			return answers;
+			QuizFinish(answers);
 		}
+
+		private void QuizFinish(List<UserAnswer> answers)
+		{
+			QuizFinisHandler?.Invoke(this, new CustomArgs(answers));
+		}
+
+		#endregion Methods
 	}
 }
