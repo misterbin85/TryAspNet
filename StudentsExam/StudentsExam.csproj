@@ -47,18 +47,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationHelper.cs" />
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
+    <Compile Include="Entities\AnswerVariant.cs" />
     <Compile Include="Entities\IUser.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\Quiz.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\Teacher.cs" />
+    <Compile Include="Entities\UserAnswer.cs" />
     <Compile Include="Entities\Users.cs" />
     <Compile Include="Factories\UsersFactory.cs" />
     <Compile Include="FileUtils\JsonUtils.cs" />
+    <Compile Include="Helpers\CustomArgs.cs" />
+    <Compile Include="Helpers\ResultsSaver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="JSONs\Questions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="JSONs\Users.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

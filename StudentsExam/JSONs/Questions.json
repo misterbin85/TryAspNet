@@ -1,0 +1,124 @@
+﻿{
+    "Questions": [
+        {
+            "Id": 1,
+            "QuestionText": "What is Jagged Array in C#?",
+            "PossibleAnswers": [
+                {
+                    "Number": 1,
+                    "Text": "It is an array of arrays.",
+                    "IsCorrect": true
+                },
+                {
+                    "Number": 2,
+                    "Text": "Who knows",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 3,
+                    "Text": "Simple straight Array",
+                    "IsCorrect": false
+                }
+            ]
+        },
+        {
+            "Id": 2,
+            "QuestionText": "In how many ways you can pass parameters to a method?",
+            "PossibleAnswers": [
+                {
+                    "Number": 1,
+                    "Text": "One Way",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 2,
+                    "Text": "Two ways",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 3,
+                    "Text": "There are three ways that parameters can be passed to a method",
+                    "IsCorrect": true
+                },
+                {
+                    "Number": 4,
+                    "Text": "As many as you need",
+                    "IsCorrect": false
+                }
+            ]
+        },
+        {
+            "Id": 3,
+            "QuestionText": "What is the purpose of as operator in C#?",
+            "PossibleAnswers": [
+                {
+                    "Number": 1,
+                    "Text": "For comparison",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 2,
+                    "Text": "Hm...",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 3,
+                    "Text": "'as' operator casts without raising an exception if the cast fails.",
+                    "IsCorrect": true
+                },
+                {
+                    "Number": 4,
+                    "Text": "As you may think",
+                    "IsCorrect": false
+                }
+            ]
+        },
+        {
+            "Id": 4,
+            "QuestionText": "Can you return multiple values from a function in C#?",
+            "PossibleAnswers": [
+                {
+                    "Number": 1,
+                    "Text": "Nope",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 2,
+                    "Text": "Yes. Using output parameters",
+                    "IsCorrect": true
+                },
+                {
+                    "Number": 3,
+                    "Text": "I do not know",
+                    "IsCorrect": false
+                }
+            ]
+        },
+        {
+            "Id": 5,
+            "QuestionText": "What is boxing in C#?",
+            "PossibleAnswers": [
+                {
+                    "Number": 1,
+                    "Text": "Packing products in a store",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 2,
+                    "Text": "It is a sport",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 3,
+                    "Text": "I do not know",
+                    "IsCorrect": false
+                },
+                {
+                    "Number": 4,
+                    "Text": "When a value type is converted to object type.",
+                    "IsCorrect": true
+                }
+            ]
+        }
+    ]
+}

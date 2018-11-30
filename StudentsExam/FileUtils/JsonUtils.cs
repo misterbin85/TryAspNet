@@ -6,11 +6,17 @@ namespace StudentsExam.FileUtils
 {
 	public sealed class JsonUtils
 	{
+		private static readonly string ExeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)?.Replace("file:\\", string.Empty);
+
 		public static JObject LoadJsonFile(string fileName)
 		{
-			var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)?.Replace("file:\\", string.Empty);
+			return JObject.Parse(File.ReadAllText($@"{ExeDir}\JSONs\{fileName}.json"));
+		}
 
-			return JObject.Parse(File.ReadAllText($@"{exeDir}\JSONs\{fileName}.json"));
+		public static void SaveJsonToFile(string jsonString)
+		{
+			var fileName = "Test"; // temporary hardcoded for testing
+			File.WriteAllText($@"{ExeDir}\JSONs\{fileName}.json", jsonString);
 		}
 	}
 }
