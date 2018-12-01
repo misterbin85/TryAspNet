@@ -6,38 +6,46 @@ using System.Linq;
 
 namespace StudentsExam.Helpers
 {
-	public class QuizResultsSaver
-	{
-		private readonly Quiz quiz;
+    public class QuizResultsSaver
+    {
+        private readonly Quiz _quiz;
 
-		public QuizResultsSaver(Quiz quiz)
-		{
-			this.quiz = quiz;
-		}
+        #region Constructor
 
-		public void SubscribeToQuiz()
-		{
-			quiz.QuizFinisHandler += SaveResults;
-		}
+        public QuizResultsSaver(Quiz quiz)
+        {
+            this._quiz = quiz;
+        }
 
-		private void SaveResults(object sender, EventArgs e)
-		{
-			var user = ((CustomArgs)e).Answers.First().UserName;
+        #endregion Constructor
 
-			var resultObject = new
-			{
-				UserName = user,
-				Answers = ((CustomArgs)e).Answers.Select(answer => new
-				{
-					QuestionText = answer.QuestionText,
-					AnswerText = answer.AnswerText,
-					IsCorrect = answer.IsCorrect
-				}).ToList()
-			};
+        #region Methods
 
-			var jsonString = JsonConvert.SerializeObject(resultObject);
+        public void SubscribeToQuiz()
+        {
+            _quiz.QuizFinisHandler += SaveResults;
+        }
 
-			JsonUtils.SaveJsonToFile(user, jsonString);
-		}
-	}
+        private void SaveResults(object sender, EventArgs e)
+        {
+            var answers = ((CustomArgs)e).Answers;
+            var user = answers.First().UserName;
+
+            var resultObject = new
+            {
+                UserName = user,
+                Score = answers.Count(a => a.IsCorrect),
+                Answers = answers.Select(answer => new
+                {
+                    QuestionText = answer.QuestionText,
+                    AnswerText = answer.AnswerText,
+                    IsCorrect = answer.IsCorrect
+                }).ToList()
+            };
+
+            JsonUtils.SaveJsonToFile(user, resultObject);
+        }
+
+        #endregion Methods
+    }
 }
