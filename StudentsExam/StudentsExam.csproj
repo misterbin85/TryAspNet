@@ -56,7 +56,7 @@
     <Compile Include="Entities\Teacher.cs" />
     <Compile Include="Entities\UserAnswer.cs" />
     <Compile Include="Entities\Users.cs" />
-    <Compile Include="Factories\UsersFactory.cs" />
+    <Compile Include="Factories\UserStrategy.cs" />
     <Compile Include="FileUtils\JsonUtils.cs" />
     <Compile Include="Helpers\CustomArgs.cs" />
     <Compile Include="Helpers\ResultsSaver.cs" />
