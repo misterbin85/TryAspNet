@@ -28,5 +28,20 @@ namespace MyTestMVC.Controllers
 		{
 			throw new System.NotImplementedException();
 		}
+
+		public ActionResult Create()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public ActionResult Details()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public ActionResult Delete()
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }
