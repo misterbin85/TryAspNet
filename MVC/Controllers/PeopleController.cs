@@ -23,5 +23,10 @@ namespace MyTestMVC.Controllers
 
 			return View(personModels);
 		}
+
+		public ActionResult Edit()
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }

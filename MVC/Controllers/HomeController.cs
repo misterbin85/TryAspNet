@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MyTestMVC.Controllers
 {
@@ -11,7 +7,7 @@ namespace MyTestMVC.Controllers
 		public ActionResult Index()
 		{
 			var def = 0;
-			var a = 10 / def;
+			//var a = 10 / def;
 			return View();
 		}
 
