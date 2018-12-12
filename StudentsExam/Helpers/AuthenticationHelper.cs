@@ -71,7 +71,7 @@ namespace StudentsExam.Helpers
 
 			bool res = int.TryParse(userInput, out int choice);
 
-			if (!res || choice > availableUserTypes.Count)
+			if (!res || choice >= availableUserTypes.Count)
 			{
 				_clear();
 				Console.WriteLine("Please select only mentioned numbers. Trying again:");
@@ -88,7 +88,7 @@ namespace StudentsExam.Helpers
 			Console.WriteLine("Please enter your Name:");
 			user.Name = _readInput()?.ToLower();
 			Console.WriteLine("Please enter your Email:");
-			user.Email = _readInput().ToLower();
+			user.Email = _readInput()?.ToLower();
 			_clear();
 
 			return user;
