@@ -51,10 +51,9 @@ namespace CustomAuthenticationMVC.Controllers
 						};
 
 						string userData = JsonConvert.SerializeObject(userModel);
-						FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket
-							(
-							1, loginView.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData
-							);
+
+						FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+								1, loginView.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData);
 
 						string enTicket = FormsAuthentication.Encrypt(authTicket);
 						HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
@@ -135,7 +134,7 @@ namespace CustomAuthenticationMVC.Controllers
 			bool statusAccount = false;
 			using (AuthenticationDB dbContext = new DataAccess.AuthenticationDB())
 			{
-				var userAccount = dbContext.Users.Where(u => u.ActivationCode.ToString().Equals(id)).FirstOrDefault();
+				var userAccount = dbContext.Users.FirstOrDefault(u => u.ActivationCode.ToString().Equals(id));
 
 				if (userAccount != null)
 				{

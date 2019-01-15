@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace CustomAuthenticationMVC
 {
-	public class MvcApplication : System.Web.HttpApplication
+	public class MvcApplication : HttpApplication
 	{
 		protected void Application_Start()
 		{
@@ -18,7 +18,12 @@ namespace CustomAuthenticationMVC
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 		}
 
-		protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+		protected void Session_End(object sender, EventArgs e)
+		{
+			HttpContext.Current.Session.Abandon();
+		}
+
+		protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
 		{
 			HttpCookie authCookie = Request.Cookies["Cookie1"];
 			if (authCookie != null)

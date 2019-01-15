@@ -77,7 +77,7 @@ namespace CustomAuthenticationMVC.CustomAuthentication
 
 		public override string GetUserNameByEmail(string email)
 		{
-			using (AuthenticationDB dbContext = new DataAccess.AuthenticationDB())
+			using (AuthenticationDB dbContext = new AuthenticationDB())
 			{
 				string username = (from u in dbContext.Users
 								   where string.Compare(email, u.Email) == 0
