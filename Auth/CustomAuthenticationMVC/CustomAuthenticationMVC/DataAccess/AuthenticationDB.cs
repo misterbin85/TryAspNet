@@ -1,19 +1,12 @@
-﻿using CustomAuthenticationMVC.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
+﻿using System.Data.Entity;
 
 namespace CustomAuthenticationMVC.DataAccess
 {
     public class AuthenticationDB : DbContext
     {
         public AuthenticationDB()
-            :base("AuthenticationDB")
+            : base("AuthenticationDB")
         {
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
