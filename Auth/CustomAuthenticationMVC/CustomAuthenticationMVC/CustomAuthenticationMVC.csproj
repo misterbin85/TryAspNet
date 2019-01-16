@@ -177,7 +177,9 @@
       <DependentUpon>201712282154535_initial_migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\LoginView.cs" />
+    <Compile Include="Models\RegistrationView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

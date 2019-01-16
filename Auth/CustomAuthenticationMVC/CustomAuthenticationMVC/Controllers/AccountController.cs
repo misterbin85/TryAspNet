@@ -106,7 +106,7 @@ namespace CustomAuthenticationMVC.Controllers
 						LastName = registrationView.LastName,
 						Email = registrationView.Email,
 						Password = registrationView.Password,
-						ActivationCode = Guid.NewGuid(),
+						ActivationCode = Guid.NewGuid()
 					};
 
 					dbContext.Users.Add(user);
