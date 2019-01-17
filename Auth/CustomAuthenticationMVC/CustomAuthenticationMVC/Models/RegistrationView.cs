@@ -28,7 +28,6 @@ namespace CustomAuthenticationMVC.Models
 		[Display(Name = "Role")]
 		public string Role { get; set; }
 
-		[Required]
 		public IEnumerable<Role> Roles { get; set; }
 
 		[Required]
