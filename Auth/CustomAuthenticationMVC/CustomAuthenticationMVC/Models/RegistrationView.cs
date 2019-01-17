@@ -1,6 +1,7 @@
-﻿using System;
+﻿using CustomAuthenticationMVC.DataAccess;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace CustomAuthenticationMVC.Models
 {
@@ -24,9 +25,11 @@ namespace CustomAuthenticationMVC.Models
 		public string Email { get; set; }
 
 		[Required(ErrorMessage = "Role is required")]
-		[DataType(DataType.Text)]
 		[Display(Name = "Role")]
-		public SelectList Role { get; set; }
+		public string Role { get; set; }
+
+		[Required]
+		public IEnumerable<Role> Roles { get; set; }
 
 		[Required]
 		public Guid ActivationCode { get; set; }
