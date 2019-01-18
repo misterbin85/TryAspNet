@@ -26,7 +26,7 @@ namespace CustomAuthenticationMVC.Models
 
 		[Required(ErrorMessage = "Role is required")]
 		[Display(Name = "Role")]
-		public string Role { get; set; }
+		public int Role { get; set; }
 
 		public IEnumerable<Role> Roles { get; set; }
 
