@@ -1,6 +1,5 @@
 ﻿using CustomAuthenticationMVC.DataAccess;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -10,7 +9,7 @@ namespace CustomAuthenticationMVC.CustomAuthentication
     public class CustomRole : RoleProvider
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="username"></param>
         /// <param name="roleName"></param>
@@ -22,7 +21,7 @@ namespace CustomAuthenticationMVC.CustomAuthentication
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -41,19 +40,14 @@ namespace CustomAuthenticationMVC.CustomAuthentication
                                     where string.Compare(us.Username, username, StringComparison.OrdinalIgnoreCase) == 0
                                     select us).FirstOrDefault();
 
-                
-                if(selectedUser != null)
+                if (selectedUser != null)
                 {
-                    userRoles = new[] { selectedUser.Roles.Select(r=>r.RoleName).ToString() };
+                    userRoles = new[] { selectedUser.Roles.Select(r => r.RoleName).ToString() };
                 }
 
                 return userRoles.ToArray();
             }
-
-
         }
-
-
 
         #region Overrides of Role Provider
 
@@ -100,7 +94,6 @@ namespace CustomAuthenticationMVC.CustomAuthentication
             throw new NotImplementedException();
         }
 
-
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -111,6 +104,6 @@ namespace CustomAuthenticationMVC.CustomAuthentication
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion Overrides of Role Provider
     }
 }
