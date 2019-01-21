@@ -113,11 +113,10 @@ namespace CustomAuthenticationMVC.Controllers
                         Email = registrationView.Email,
                         Password = registrationView.Password,
                         ActivationCode = Guid.NewGuid(),
-                        Roles = new List<Role> { dbContext.Roles.FirstOrDefault(role => role.RoleId.Equals(registrationView.Role)) }
+                        Roles = new List<Role> { dbContext.Roles.FirstOrDefault(role => role.RoleId.Equals(registrationView.Role)) },
+                        // for now instead actual email activation to be able to log in later
+                        IsActive = true
                     };
-
-                    // for now instead actual email activation to be able to log in later
-                    user.IsActive = true;
 
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
@@ -174,7 +173,7 @@ namespace CustomAuthenticationMVC.Controllers
         [NonAction]
         public void VerificationEmail(string email, string activationCode)
         {
-            var url = string.Format("/Account/ActivationAccount/{0}", activationCode);
+            var url = $"/Account/ActivationAccount/{activationCode}";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
 
             var fromEmail = new MailAddress("mehdi.rami2012@gmail.com", "Activation Account - AKKA");

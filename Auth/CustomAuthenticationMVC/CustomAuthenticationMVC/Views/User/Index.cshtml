@@ -1,7 +1,6 @@
-﻿
+﻿@model CustomAuthenticationMVC.Models.CustomSerializeModel
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Hello User</h2>
-
+<h2>Hello @Model.FirstName</h2>
+<p>You are a @Model.RoleName.FirstOrDefault()</p>
