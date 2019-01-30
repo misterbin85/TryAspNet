@@ -33,7 +33,7 @@
                 @if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var identity = ((CustomPrincipal)HttpContext.Current.User);
-                    @Html.Label(string.Format("Welcome {0} {1}", identity.FirstName, identity.LastName))
+                    @Html.Label($"Welcome {identity.FirstName} {identity.LastName}")
                     @Html.ActionLink("Log out", "LogOut", "Account")
                 }
             </span>

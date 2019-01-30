@@ -166,15 +166,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
     <Compile Include="CustomAuthentication\CustomMembership.cs" />
     <Compile Include="CustomAuthentication\CustomMembershipUser.cs" />
     <Compile Include="CustomAuthentication\CustomPrincipal.cs" />
     <Compile Include="CustomAuthentication\CustomRole.cs" />
-    <Compile Include="DataAccess\Answer.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="DataAccess\AuthenticationDB.cs" />
-    <Compile Include="DataAccess\Question.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="Global.asax.cs">
@@ -202,6 +203,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\AnyError.cshtml" />
+    <Content Include="Views\Question\Question.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

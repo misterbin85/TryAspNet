@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CustomAuthenticationMVC.DataAccess
+namespace CustomAuthenticationMVC.Models
 {
     public class Question
     {

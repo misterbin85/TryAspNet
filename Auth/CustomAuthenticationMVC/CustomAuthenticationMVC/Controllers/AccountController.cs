@@ -70,7 +70,7 @@ namespace CustomAuthenticationMVC.Controllers
                     }
                 }
             }
-            ModelState.AddModelError("", "Something Wrong : Username or Password invalid ^_^ ");
+            ModelState.AddModelError("", "Something Wrong : Username or Password invalid");
             return View(loginView);
         }
 
