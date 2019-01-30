@@ -13,7 +13,7 @@ namespace CustomAuthenticationMVC.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201712282154535_initial_migration"; }
+            get { return "201901301517354_initial_migration"; }
         }
         
         string IMigrationMetadata.Source

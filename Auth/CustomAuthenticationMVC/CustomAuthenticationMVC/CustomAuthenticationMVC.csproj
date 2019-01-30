@@ -166,15 +166,17 @@
     <Compile Include="CustomAuthentication\CustomMembershipUser.cs" />
     <Compile Include="CustomAuthentication\CustomPrincipal.cs" />
     <Compile Include="CustomAuthentication\CustomRole.cs" />
+    <Compile Include="DataAccess\Answer.cs" />
     <Compile Include="DataAccess\AuthenticationDB.cs" />
+    <Compile Include="DataAccess\Question.cs" />
     <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712282154535_initial_migration.cs" />
-    <Compile Include="Migrations\201712282154535_initial_migration.Designer.cs">
-      <DependentUpon>201712282154535_initial_migration.cs</DependentUpon>
+    <Compile Include="Migrations\201901301517354_initial_migration.cs" />
+    <Compile Include="Migrations\201901301517354_initial_migration.Designer.cs">
+      <DependentUpon>201901301517354_initial_migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
@@ -205,8 +207,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712282154535_initial_migration.resx">
-      <DependentUpon>201712282154535_initial_migration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901301517354_initial_migration.resx">
+      <DependentUpon>201901301517354_initial_migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
