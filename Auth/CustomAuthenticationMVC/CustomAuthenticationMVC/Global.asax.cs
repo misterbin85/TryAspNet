@@ -4,80 +4,71 @@ using CustomAuthenticationMVC.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using Newtonsoft.Json.Linq;
 
 namespace CustomAuthenticationMVC
 {
-	public class MvcApplication : HttpApplication
-	{
-		protected void Application_Start()
-		{
-			AreaRegistration.RegisterAllAreas();
-			RouteConfig.RegisterRoutes(RouteTable.Routes);
+    public class MvcApplication : HttpApplication
+    {
+        private static readonly string ExeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)?.Replace("file:\\", string.Empty);
 
-			using (AuthenticationDB db = new AuthenticationDB())
-			{
-				var questions = db.Questions.ToList();
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            PopulateQuiz();
+        }
 
-				var q = new Question
-				{
-					Id = 1,
-					QuestionText = "Test Question 1"
-				};
+        private static void PopulateQuiz()
+        {
+            using (AuthenticationDB db = new AuthenticationDB())
+            {
+                if (db.Questions.Any())
+                    return;
 
-				List<Answer> answers = new List<Answer>
-				{
-					new Answer
-					{
-						Question = q,
-						Id = 1,
-						QuestionId = q.Id,
-						Text = "Bla",
-						IsCorrect = false
-					},
-					new Answer
-					{
-						Question = q,
-						Id = 2,
-						QuestionId = q.Id,
-						Text = "Bla_2",
-						IsCorrect = false
-					}
-				};
-				q.PossibleAnswers = answers;
+                var questions = JObject.Parse(File.ReadAllText($@"{ExeDir}\Jsons\Questions.json"))["Questions"].ToObject<IList<Question>>();
+                var answers = JObject.Parse(File.ReadAllText($@"{ExeDir}\Jsons\Answers.json"))["Answers"].ToObject<IList<Answer>>();
+                foreach (var question in questions)
+                {
+                    question.PossibleAnswers = answers.Where(a => a.QuestionId.Equals(question.Id)).ToList();
+                }
 
-				db.Questions.Add(q);
-				db.SaveChanges();
-			}
-		}
+                db.Questions.AddRange(questions);
+                db.SaveChanges();
+            }
+        }
 
-		protected void Session_End(object sender, EventArgs e)
-		{
-			HttpContext.Current.Session.Abandon();
-		}
+        protected void Session_End(object sender, EventArgs e)
+        {
+            HttpContext.Current.Session.Abandon();
+        }
 
-		protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
-		{
-			HttpCookie authCookie = Request.Cookies["Cookie1"];
-			if (authCookie != null)
-			{
-				FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            HttpCookie authCookie = Request.Cookies["Cookie1"];
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 
-				var serializeModel = JsonConvert.DeserializeObject<CustomSerializeModel>(authTicket.UserData);
+                var serializeModel = JsonConvert.DeserializeObject<CustomSerializeModel>(authTicket.UserData);
 
-				CustomPrincipal principal = new CustomPrincipal(authTicket.Name);
+                CustomPrincipal principal = new CustomPrincipal(authTicket.Name)
+                {
+                    UserId = serializeModel.UserId,
+                    FirstName = serializeModel.FirstName,
+                    LastName = serializeModel.LastName,
+                    Roles = serializeModel.RoleName.ToArray<string>()
+                };
 
-				principal.UserId = serializeModel.UserId;
-				principal.FirstName = serializeModel.FirstName;
-				principal.LastName = serializeModel.LastName;
-				principal.Roles = serializeModel.RoleName.ToArray<string>();
-
-				HttpContext.Current.User = principal;
-			}
-		}
-	}
+                HttpContext.Current.User = principal;
+            }
+        }
+    }
 }

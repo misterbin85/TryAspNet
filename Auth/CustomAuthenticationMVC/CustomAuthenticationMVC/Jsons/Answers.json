@@ -1,0 +1,112 @@
+{
+  "Answers": [
+    {
+      "Id": 1,
+      "Text": "It is an array of arrays.",
+      "IsCorrect": true,
+      "QuestionId": 1
+    },
+    {
+      "Id": 2,
+      "Text": "Who knows",
+      "IsCorrect": false,
+      "QuestionId": 1
+    },
+    {
+      "Id": 3,
+      "Text": "Simple straight Array",
+      "IsCorrect": false,
+      "QuestionId": 1
+    },
+    {
+      "Id": 4,
+      "Text": "One Way",
+      "IsCorrect": false,
+      "QuestionId": 2
+    },
+    {
+      "Id": 5,
+      "Text": "Two ways",
+      "IsCorrect": false,
+      "QuestionId": 2
+    },
+    {
+      "Id": 6,
+      "Text": "There are three ways that parameters can be passed to a method",
+      "IsCorrect": true,
+      "QuestionId": 2
+    },
+    {
+      "Id": 7,
+      "Text": "As many as you need",
+      "IsCorrect": false,
+      "QuestionId": 2
+    },
+    {
+      "Id": 8,
+      "Text": "For comparison",
+      "IsCorrect": false,
+      "QuestionId": 3
+    },
+    {
+      "Id": 9,
+      "Text": "Hm...",
+      "IsCorrect": false,
+      "QuestionId": 3
+    },
+    {
+      "Id": 10,
+      "Text": "'as' operator casts without raising an exception if the cast fails.",
+      "IsCorrect": true,
+      "QuestionId": 3
+    },
+    {
+      "Id": 11,
+      "Text": "As you may think",
+      "IsCorrect": false,
+      "QuestionId": 3
+    },
+    {
+      "Id": 12,
+      "Text": "Nope",
+      "IsCorrect": false,
+      "QuestionId": 4
+    },
+    {
+      "Id": 13,
+      "Text": "Yes. Using output parameters",
+      "IsCorrect": true,
+      "QuestionId": 4
+    },
+    {
+      "Id": 14,
+      "Text": "I do not know",
+      "IsCorrect": false,
+      "QuestionId": 4
+    },
+    {
+      "Id": 15,
+      "Text": "Packing products in a store",
+      "IsCorrect": false,
+      "QuestionId": 5
+    },
+    {
+      "Id": 16,
+      "Text": "It is a sport",
+      "IsCorrect": false,
+      "QuestionId": 5
+    },
+    {
+      "Id": 17,
+      "Text": "I do not know",
+      "IsCorrect": false,
+      "QuestionId": 5
+    },
+    {
+      "Id": 18,
+      "Text": "When a value type is converted to object type.",
+      "IsCorrect": true,
+      "QuestionId": 5
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+﻿{
+  "Questions": [
+    {
+      "Id": 1,
+      "QuestionText": "What is Jagged Array in C#?"
+    },
+    {
+      "Id": 2,
+      "QuestionText": "In how many ways you can pass parameters to a method?"
+    },
+    {
+      "Id": 3,
+      "QuestionText": "What is the purpose of as operator in C#?"
+    },
+    {
+      "Id": 4,
+      "QuestionText": "Can you return multiple values from a function in C#?"
+    },
+    {
+      "Id": 5,
+      "QuestionText": "What is boxing in C#?"
+    }
+  ]
+}
