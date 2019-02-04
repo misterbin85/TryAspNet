@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CustomAuthenticationMVC.Models
+namespace CustomAuthenticationMVC.DataAccess
 {
     public class Answer
     {

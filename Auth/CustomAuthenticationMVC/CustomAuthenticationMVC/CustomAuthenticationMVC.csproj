@@ -89,10 +89,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -173,9 +173,9 @@
     <Compile Include="CustomAuthentication\CustomMembershipUser.cs" />
     <Compile Include="CustomAuthentication\CustomPrincipal.cs" />
     <Compile Include="CustomAuthentication\CustomRole.cs" />
-    <Compile Include="Models\Answer.cs" />
+    <Compile Include="DataAccess\Answer.cs" />
+    <Compile Include="DataAccess\Question.cs" />
     <Compile Include="DataAccess\AuthenticationDB.cs" />
-    <Compile Include="Models\Question.cs" />
     <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="Global.asax.cs">
@@ -186,8 +186,10 @@
       <DependentUpon>201901301517354_initial_migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\LoginView.cs" />
+    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
