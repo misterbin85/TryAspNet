@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Actors</h1>
+</div>
+
+<div class="row">
+    <div id="ActorDiv" class="col-md-4">
+        <p>Render actors here</p>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        GetAllActors();
+    });
+
+    function GetAllActors() {
+        $.get("/Home/Actors", function (data) {
+            $("#ActorDiv").html(data);
+        });
+    }
+</script>

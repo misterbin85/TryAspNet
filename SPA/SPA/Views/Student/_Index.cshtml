@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SPA.Models.Student>
+@{
+    Layout = null;
+}
+
+<h2> Table Data</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Class</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StudentID</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.Class</td>
+                <td>
+                    <a href="#/Student/Edit?id=@item.StudentID">Edit</a>
+                    <a href="javascript::;" onclick="DeleteStudent('@item.StudentID')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>  
