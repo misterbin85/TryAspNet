@@ -6,18 +6,21 @@ using System.Web.Mvc;
 
 namespace CustomAuthenticationMVC.Controllers
 {
-	public class QuestionController : Controller
-	{
-		// GET: Question
-		[HttpGet]
-		public ActionResult Question()
-		{
-			List<Question> questions = new List<Question>();
-			using (AuthenticationDB dB = new AuthenticationDB())
-			{
-				questions = dB.Questions.ToList();
-			}
-			return View("Question", questions.First());
-		}
-	}
+    public class QuestionController : Controller
+    {
+        // GET: Question
+        [HttpGet]
+        public ActionResult Question()
+        {
+            QuestionViewModel questionViewModel;
+
+            using (AuthenticationDB dB = new AuthenticationDB())
+            {
+                var questions = dB.Questions.ToList();
+                questionViewModel = new QuestionViewModel(questions.First());
+            }
+
+            return View("Question", questionViewModel);
+        }
+    }
 }
