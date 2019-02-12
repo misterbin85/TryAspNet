@@ -34,13 +34,13 @@ var routingApp = $.sammy("#MainContent", function () {
 });
 
 function IfLinkNotExist(type, path) {
-    if (!(type != null && path != null))
+    if (!(type !== null && path !== null))
         return false;
 
     var isExist = true;
 
     if (type.toLowerCase() === "get") {
-        if (routingApp.routes.get != undefined) {
+        if (routingApp.routes.get !== undefined) {
             $.map(routingApp.routes.get, function (item) {
                 if (item.path.toString().replace("/#", "#").replace(/\\/g, '').replace("$/", "").indexOf(path) >= 0) {
                     isExist = false;
@@ -48,7 +48,7 @@ function IfLinkNotExist(type, path) {
             });
         }
     } else if (type.toLowerCase() === "post") {
-        if (routingApp.routes.post != undefined) {
+        if (routingApp.routes.post !== undefined) {
             $.map(routingApp.routes.post, function (item) {
                 if (item.path.toString().replace("/#", "#").replace(/\\/g, '').replace("$/", "").indexOf(path) >= 0) {
                     isExist = false;

@@ -1,17 +1,22 @@
-﻿@model  IEnumerable<Actors.Models.Actor>
+﻿@model  IEnumerable<Actors.Models.ActorViewModel>
 @{
     Layout = null;
 }
 
-<!DOCTYPE html>
+<ul style="list-style: none" , class="row">
+    @foreach (var actorModel in Model)
+    {
+        <li class="col-md-3">
+            <br />
+            @{
+                var path = actorModel.Photos.FirstOrDefault(p => p.IsMain)?.PhotoPath;
+            }
+            <a data-fancybox="gallery" data-caption="@actorModel.Actor.FullName">
+                <img class="img-thumbnail" src="~/Images/@path" alt="..." />
+            </a>
+            <br />
+            <label>@actorModel.Actor.FullName</label>
+        </li>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-</head>
-<body>
-    <div>
-        <h1>Actors from collection</h1>
-    </div>
-</body>
-</html>
+    }
+</ul>
