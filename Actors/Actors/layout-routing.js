@@ -18,8 +18,8 @@ var routingApp = $.sammy("#MainContent", function () {
         });
     });
 
-    this.get("#/Home/Actors", function (context) {
-        titleContent.html("Actors");
+    this.get("#/Home/Contact", function (context) {
+        titleContent.html("Contact");
         $.get("/Home/Contact", function (data) {
             context.$element().html(data);
         });

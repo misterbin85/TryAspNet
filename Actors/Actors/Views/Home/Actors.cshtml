@@ -11,9 +11,7 @@
             @{
                 var path = actorModel.Photos.FirstOrDefault(p => p.IsMain)?.PhotoPath;
             }
-            <a data-fancybox="gallery" data-caption="@actorModel.Actor.FullName">
-                <img class="img-thumbnail" src="~/Images/@path" alt="..." />
-            </a>
+            <img class="img-thumbnail" src="~/Images/@path" alt="..." />
             <br />
             <label>@actorModel.Actor.FullName</label>
         </li>
