@@ -162,6 +162,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Ардова_Анна.jpg" />
     <Content Include="Images\Безруков_Сергей.jpg" />
+    <Content Include="Images\Вдовина_Наталия.jpg" />
+    <Content Include="Images\Добронравов_Федор.jpg" />
     <Content Include="Images\Хориняк_Виктор.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
