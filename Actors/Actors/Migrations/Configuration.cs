@@ -1,23 +1,24 @@
+using Actors.DataAccess;
+
 namespace Actors.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Actors.DataAccess.ActorsDb>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
+	internal sealed class Configuration : DbMigrationsConfiguration<ActorsDb>
+	{
+		public Configuration()
+		{
+			AutomaticMigrationsEnabled = true;
+			AutomaticMigrationDataLossAllowed = true;
+		}
 
-        protected override void Seed(Actors.DataAccess.ActorsDb context)
-        {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
-        }
-    }
+		protected override void Seed(ActorsDb context)
+		{
+			context.Actors.AddOrUpdate(x => x.Id,
+				new Actor { FullName = "Ардова Анна", FullInfo = "Info goes here", Gender = "female" },
+				new Actor { FullName = "Безруков Сергей", FullInfo = "Info goes here", Gender = "male" },
+				new Actor { FullName = "Хориняк Виктор", FullInfo = "Info goes here", Gender = "male" }
+			);
+		}
+	}
 }

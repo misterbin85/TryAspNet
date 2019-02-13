@@ -6,10 +6,10 @@
 <ul style="list-style: none" , class="row">
     @foreach (var actorModel in Model)
     {
-        <li class="col-md-3">
+        <li class="col-md-2 photo_back">
             <br />
             @{
-                var path = actorModel.Photos.FirstOrDefault(p => p.IsMain)?.PhotoPath;
+                var path = actorModel.Photos.FirstOrDefault(p => p.IsMain)?.PhotoPath.Replace(" ", "_") + ".jpg";
             }
             <img class="img-thumbnail" src="~/Images/@path" alt="..." />
             <br />

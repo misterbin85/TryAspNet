@@ -1,6 +1,6 @@
 ﻿namespace Actors.Models
 {
-	public class Photo
+	public class PhotoModel
 	{
 		public int PhotoId { get; set; }
 
