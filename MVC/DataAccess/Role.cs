@@ -1,4 +1,6 @@
-﻿namespace MyTestMVC.DataAccess
+﻿using System.Collections.Generic;
+
+namespace MyTestMVC.DataAccess
 {
     public class Role
     {
