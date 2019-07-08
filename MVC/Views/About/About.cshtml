@@ -26,7 +26,6 @@
             regionSelect.empty();
                 $.getJSON('@Url.Action("GetRegions")', { state: selectedState }, function(regions) {
                     if (regions != null && !jQuery.isEmptyObject(regions)) {
-                        //debugger;
                         regionSelect.append($('<option />', { value: null, text: "--- select region ---" }));
                         $.each(regions, function (index, region) {
                             regionSelect.append($('<option />',
