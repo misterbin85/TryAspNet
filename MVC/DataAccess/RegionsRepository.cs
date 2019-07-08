@@ -18,7 +18,12 @@ namespace MyTestMVC.DataAccess
                 new SelectListItem
                 {
                     Value = "NY",
-                    Text = "New York region"
+                    Text = "New York region 1"
+                },
+                new SelectListItem
+                {
+                    Value = "NY",
+                    Text = "New York region 2"
                 },
                 new SelectListItem
                 {
