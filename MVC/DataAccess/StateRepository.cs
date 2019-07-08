@@ -3,9 +3,9 @@ using System.Web.Mvc;
 
 namespace MyTestMVC.DataAccess
 {
-    public class CountriesRepository
+    public class StateRepository
     {
-        public IEnumerable<SelectListItem> GetCountries()
+        public IEnumerable<SelectListItem> GetStates()
         {
             return new List<SelectListItem>
             {

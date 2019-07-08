@@ -4,9 +4,40 @@
 <h3>@ViewBag.Message</h3>
 
 <div class="form-group">
-    @Html.LabelFor(x => Model.SelectedCountry, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(x => Model.SelectedState, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-5">
-        @Html.DropDownListFor(x => Model.SelectedCountry, new SelectList(Model.Countries, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country" })
-        @Html.ValidationMessageFor(x => x.SelectedCountry, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(x => Model.SelectedState, new SelectList(Model.States, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "State" })
+        @Html.ValidationMessageFor(x => x.SelectedState, "", new { @class = "text-danger" })
+    </div>
+    @Html.LabelFor(x => Model.Regions, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-5">
+        @Html.DropDownListFor(x => Model.Regions, new SelectList(Model.Regions, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Region" })
+        @Html.ValidationMessageFor(x => x.Regions, "", new { @class = "text-danger" })
     </div>
 </div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $('#State').change(function() {
+            var selectedState = $('#State').val();
+            var regionSelect = $('#Region');
+            regionSelect.empty();
+                $.getJSON('@Url.Action("GetRegions")', { state: selectedState }, function(regions) {
+                    if (regions != null && !jQuery.isEmptyObject(regions)) {
+                        //debugger;
+                        regionSelect.append($('<option />', { value: null, text: "--- select region ---" }));
+                        $.each(regions, function (index, region) {
+                            regionSelect.append($('<option />',
+                                    {
+                                        value: region.Value,
+                                        text: region.Text
+                                    }));
+                            });
+                    }
+                    });
+            }
+        )
+    </script>
+}

@@ -7,10 +7,10 @@ namespace MyTestMVC.Models
     public class DropdownViewModel
     {
         [Required]
-        [Display(Name = "Country")]
-        public string SelectedCountry { get; set; }
+        [Display(Name = "State")]
+        public string SelectedState { get; set; }
 
-        public IEnumerable<SelectListItem> Countries { get; set; }
+        public IEnumerable<SelectListItem> States { get; set; }
 
         [Required]
         [Display(Name = "State / Region")]

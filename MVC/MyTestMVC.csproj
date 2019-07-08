@@ -146,7 +146,8 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
-    <Compile Include="DataAccess\CountriesRepository.cs" />
+    <Compile Include="DataAccess\StateRepository.cs" />
+    <Compile Include="DataAccess\RegionsRepository.cs" />
     <Compile Include="DataAccess\Role.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="Global.asax.cs">
