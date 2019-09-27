@@ -107,7 +107,6 @@ namespace PluralSightCoreProject_CityInfo.Controllers
             return NoContent();
         }
 
-
         [HttpPatch("{cityId}/pointsofinterest/{id}")]
         public IActionResult PartiallyUpdatePointOfInterest(int cityId, int id, [FromBody] JsonPatchDocument<PointOfInterestUpdateDto> patchDoc)
         {
@@ -143,13 +142,44 @@ namespace PluralSightCoreProject_CityInfo.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (pointOfInterestToPatch.Description == pointOfInterestToPatch.Name)
+            {
+                ModelState.AddModelError("Description", "The provided description should be different from name.");
+            }
+
+            TryValidateModel(pointOfInterestToPatch);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             pointOfInterest.Name = pointOfInterestToPatch.Name;
             pointOfInterest.Description = pointOfInterestToPatch.Description;
 
             return NoContent();
         }
 
+        [HttpDelete("{cityId}/pointsofinterest/{id}")]
+        public IActionResult DeletePointOfInterest(int cityId, int id)
+        {
+            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
 
+            if (city == null)
+            {
+                return NotFound();
+            }
 
+            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(dto => dto.Id == id);
+
+            if (pointOfInterest == null)
+            {
+                return NotFound();
+            }
+
+            city.PointsOfInterest.Remove(pointOfInterest);
+
+            return NoContent();
+        }
     }
 }

@@ -31,6 +31,12 @@ namespace PluralSightCoreProject_CityInfo
                             Id = 2,
                             Name = "Empire State Building",
                             Description = "A 102-story skyscraper located in Midtown Manhattan"
+                        },
+                        new PointOfInterestsDto()
+                        {
+                            Id = 3,
+                            Name = "Some interest",
+                            Description = "Bla Bla Bla"
                         }
                     }
                 },
