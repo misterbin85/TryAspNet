@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PluralSightCoreProject_CityInfo.Models;
 using System;
 using System.Linq;
+using PluralSightCoreProject_CityInfo.Services;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
 {
@@ -11,12 +12,14 @@ namespace PluralSightCoreProject_CityInfo.Controllers
     [ApiController]
     public class PointsOfInterestController : Controller
     {
-        private ILogger<PointsOfInterestController> _logger;
+        private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly IMailService _mailService;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService)
         {
             _logger = logger;
             _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
+            _mailService = mailService;
             // _logger = HttpContext.RequestServices.GetService(typeof(ILogger<PointsOfInterestController>)) as ILogger<PointsOfInterestController>;
         }
 
@@ -35,6 +38,7 @@ namespace PluralSightCoreProject_CityInfo.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogCritical($"{ex.Message}");
+                    _mailService.Sent();
                     return StatusCode(500, "Manually triggered exception.");
                 }
             }

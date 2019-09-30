@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using PluralSightCoreProject_CityInfo.Services;
 
 namespace PluralSightCoreProject_CityInfo
 {
@@ -15,11 +17,20 @@ namespace PluralSightCoreProject_CityInfo
             services.AddMvc()
                 .AddMvcOptions(options => options.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
+
+#if DEBUG
+            services.AddTransient<IMailService, LocalMailService>();
+
+#else
+            services.AddTransient<IMailService, CloudMailService>();
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // loggingBuilder.AddProvider(new NLogLoggerProvider());
+            loggerFactory.AddNLog();
 
             if (env.IsDevelopment())
             {

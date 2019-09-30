@@ -11,4 +11,10 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
