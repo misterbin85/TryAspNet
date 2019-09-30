@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PluralSightCoreProject_CityInfo.Models;
+using System;
+using System.Linq;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
 {
@@ -12,9 +11,36 @@ namespace PluralSightCoreProject_CityInfo.Controllers
     [ApiController]
     public class PointsOfInterestController : Controller
     {
+        private ILogger<PointsOfInterestController> _logger;
+
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+        {
+            _logger = logger;
+            _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
+            // _logger = HttpContext.RequestServices.GetService(typeof(ILogger<PointsOfInterestController>)) as ILogger<PointsOfInterestController>;
+        }
+
         [HttpGet("{cityId}/pointsofinterest")]
         public IActionResult GetPointsOfInterest(int cityId)
         {
+            #region Dummy
+
+            // dummy statements to check exception handling
+            if (cityId > 10)
+            {
+                try
+                {
+                    throw new Exception($"CityId is greater than 10. It is:{cityId}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical($"{ex.Message}");
+                    return StatusCode(500, "Manually triggered exception.");
+                }
+            }
+
+            #endregion Dummy
+
             var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
 
             return city != null ? (IActionResult)Ok(city.PointsOfInterest) : NotFound();
