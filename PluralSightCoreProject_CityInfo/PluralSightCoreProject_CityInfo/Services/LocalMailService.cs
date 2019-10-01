@@ -9,11 +9,12 @@ namespace PluralSightCoreProject_CityInfo.Services
 
         public LocalMailService(ILogger<LocalMailService> logger)
         {
-            this.logger = logger ?? throw new NullReferenceException(nameof(ILogger<LocalMailService>));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(ILogger<LocalMailService>));
         }
 
         public void Sent()
         {
+            var a = Startup.Configuration["mailSettings:mailToAddress"];
             this.logger.LogInformation($"Sending email from: *** {nameof(LocalMailService)} ***");
         }
     }

@@ -9,7 +9,7 @@ namespace PluralSightCoreProject_CityInfo.Services
 
         public CloudMailService(ILogger<CloudMailService> logger)
         {
-            _logger = logger ?? throw new NullReferenceException(nameof(ILogger<CloudMailService>));
+            _logger = logger ?? throw new ArgumentNullException(nameof(ILogger<CloudMailService>));
         }
 
         public void Sent()

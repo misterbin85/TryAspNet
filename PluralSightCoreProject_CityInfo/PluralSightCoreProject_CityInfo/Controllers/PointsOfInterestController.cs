@@ -17,11 +17,14 @@ namespace PluralSightCoreProject_CityInfo.Controllers
 
         public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(ILogger<PointsOfInterestController>));
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(IMailService));
+
             _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
-            _mailService = mailService;
             // _logger = HttpContext.RequestServices.GetService(typeof(ILogger<PointsOfInterestController>)) as ILogger<PointsOfInterestController>;
         }
+
+        #region Actions
 
         [HttpGet("{cityId}/pointsofinterest")]
         public IActionResult GetPointsOfInterest(int cityId)
@@ -211,5 +214,7 @@ namespace PluralSightCoreProject_CityInfo.Controllers
 
             return NoContent();
         }
+
+        #endregion
     }
 }
