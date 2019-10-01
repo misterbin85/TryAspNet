@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using PluralSightCoreProject_CityInfo.Models;
 using PluralSightCoreProject_CityInfo.Services;
 
 namespace PluralSightCoreProject_CityInfo
@@ -29,6 +30,7 @@ namespace PluralSightCoreProject_CityInfo
             services.AddMvc()
                 .AddMvcOptions(options => options.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
+            services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
 
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
