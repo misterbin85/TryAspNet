@@ -18,6 +18,7 @@ namespace PluralSightCoreProject_CityInfo
         public Startup(IConfiguration configuration /*IHostingEnvironment env*/)
         {
             Configuration = configuration;
+
             //Configuration = new ConfigurationBuilder()
             //.SetBasePath(env.ContentRootPath)
             //.AddJsonFile("appsettings.json", optional:false, reloadOnChange:true).Build();
@@ -30,8 +31,9 @@ namespace PluralSightCoreProject_CityInfo
             services.AddMvc()
                 .AddMvcOptions(options => options.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
-            services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
 
+            services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
+            //services.AddScoped<EmailConfigurationModel>();
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
 
