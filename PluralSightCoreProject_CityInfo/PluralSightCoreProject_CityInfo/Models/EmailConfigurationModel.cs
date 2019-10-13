@@ -2,8 +2,8 @@
 {
     public class EmailConfigurationModel
     {
-        public string mailToAddress { get; set; } = "defValue";
+        public string MailToAddress { get; set; } = "defValue";
 
-        public string mailFromAddress { get; set; } = "defValue";
+        public string MailFromAddress { get; set; } = "defValue";
     }
 }

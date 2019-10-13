@@ -19,16 +19,13 @@ namespace PluralSightCoreProject_CityInfo.Services
 
             _emailConfiguration = emailConfiguration ?? throw new ArgumentNullException(nameof(EmailConfigurationModel));
 
-            MailFrom = _emailConfiguration.Value.mailFromAddress;
-            MailTo = _emailConfiguration.Value.mailToAddress;
+            MailFrom = _emailConfiguration.Value.MailFromAddress;
+            MailTo = _emailConfiguration.Value.MailToAddress;
         }
 
         public void Sent()
         {
-            var a = Startup.Configuration["mailSettings:mailToAddress"];
-            var b = MailFrom;
-
-            this.logger.LogInformation($"Sending email from: *** {nameof(LocalMailService)} ***");
+            this.logger.LogInformation($"Sending email using: *** {nameof(LocalMailService)} ***, form {MailFrom}, to: {MailTo} address");
         }
     }
 }

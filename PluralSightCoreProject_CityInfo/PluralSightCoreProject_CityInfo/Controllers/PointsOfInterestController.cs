@@ -21,6 +21,7 @@ namespace PluralSightCoreProject_CityInfo.Controllers
             _mailService = mailService ?? throw new ArgumentNullException(nameof(IMailService));
 
             _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
+
             // _logger = HttpContext.RequestServices.GetService(typeof(ILogger<PointsOfInterestController>)) as ILogger<PointsOfInterestController>;
         }
 
@@ -215,6 +216,6 @@ namespace PluralSightCoreProject_CityInfo.Controllers
             return NoContent();
         }
 
-        #endregion
+        #endregion Actions
     }
 }

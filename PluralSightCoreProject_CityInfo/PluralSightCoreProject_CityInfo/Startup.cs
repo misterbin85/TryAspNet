@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -33,7 +32,6 @@ namespace PluralSightCoreProject_CityInfo
                     new XmlDataContractSerializerOutputFormatter()));
 
             services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
-            //services.AddScoped<EmailConfigurationModel>();
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
 
@@ -54,7 +52,7 @@ namespace PluralSightCoreProject_CityInfo
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseStatusCodePages();
