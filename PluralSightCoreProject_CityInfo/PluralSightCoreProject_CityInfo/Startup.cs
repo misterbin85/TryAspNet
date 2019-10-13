@@ -33,10 +33,10 @@ namespace PluralSightCoreProject_CityInfo
 
             services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
 #if DEBUG
-            services.AddTransient<IMailService, LocalMailService>();
+            services.AddSingleton<IMailService, LocalMailService>();
 
 #else
-            services.AddTransient<IMailService, CloudMailService>();
+            services.AddSingleton<IMailService, CloudMailService>();
 #endif
         }
 
