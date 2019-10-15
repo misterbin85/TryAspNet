@@ -11,7 +11,9 @@ namespace PluralSightCoreProject_CityInfo.Entities
         public CityInfoContext(DbContextOptions<CityInfoContext> contextOptions)
             : base(contextOptions)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
+
+            // Database.EnsureCreated();
         }
 
         /*
