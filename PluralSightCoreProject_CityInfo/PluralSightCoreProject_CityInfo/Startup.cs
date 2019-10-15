@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using PluralSightCoreProject_CityInfo.Entities;
 using PluralSightCoreProject_CityInfo.Models;
 using PluralSightCoreProject_CityInfo.Services;
 
@@ -32,6 +34,9 @@ namespace PluralSightCoreProject_CityInfo
                     new XmlDataContractSerializerOutputFormatter()));
 
             services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
+
+            const string sqlConnStr = @"Server=DESKTOP-7GQUA1D\MSSQLDEV; Database=CityInfoDb;User Id=sa;Password = sa;";
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(sqlConnStr));
 #if DEBUG
             services.AddSingleton<IMailService, LocalMailService>();
 
