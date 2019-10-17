@@ -34,9 +34,11 @@ namespace PluralSightCoreProject_CityInfo
                     new XmlDataContractSerializerOutputFormatter()));
 
             services.Configure<EmailConfigurationModel>(Configuration.GetSection("mailSettings"));
+            services.Configure<ConnectionStringsModel>(Configuration.GetSection("ConnectionStrings"));
 
-            const string sqlConnStr = @"Server=DESKTOP-7GQUA1D\MSSQLDEV; Database=CityInfoDb;User Id=sa;Password = sa;";
-            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(sqlConnStr));
+            // services.AddDbContext<CityInfoContext>(o=> o.UseSqlServer(""));
+
+            services.AddDbContext<CityInfoContext>();
 #if DEBUG
             services.AddSingleton<IMailService, LocalMailService>();
 
