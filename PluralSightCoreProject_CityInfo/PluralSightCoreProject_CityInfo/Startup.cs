@@ -46,7 +46,7 @@ namespace PluralSightCoreProject_CityInfo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CityInfoContext context)
         {
             // loggingBuilder.AddProvider(new NLogLoggerProvider());
             loggerFactory.AddNLog();
@@ -59,7 +59,7 @@ namespace PluralSightCoreProject_CityInfo
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            context.EnsureSeedDataForContext();
             app.UseStatusCodePages();
             app.UseMvc();
 
