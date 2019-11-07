@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using PluralSightCoreProject_CityInfo.Services;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
 {
@@ -8,20 +8,39 @@ namespace PluralSightCoreProject_CityInfo.Controllers
     [ApiController]
     public class CitiesController : Controller
     {
+        private readonly ICityInfoRepository _cityInfoRepository;
+
+        public CitiesController(ICityInfoRepository repository)
+        {
+            _cityInfoRepository = repository;
+        }
+
         [HttpGet]
         public IActionResult GetCities()
         {
-            return Ok(CitiesDataStore.Current.Cities);
+           var cities = _cityInfoRepository.GetCities().Select(c => new
+            {
+                c.Id,
+                c.Description,
+                c.Name
+            });
+
+           return Ok(cities);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCity(int id)
+        public IActionResult GetCity(int id, bool includePointsOfInterest = false)
         {
-            var cityToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(city => city.Id == id);
+            var cityToReturn = _cityInfoRepository.GetCity(id, includePointsOfInterest);
+            
+            if (cityToReturn == null)
+            {
+                return NotFound();
+            }
 
-            return cityToReturn != null
-                ? (IActionResult)Ok(cityToReturn)
-                : NotFound();
+            return includePointsOfInterest 
+                ? Ok(cityToReturn) 
+                : Ok(new { cityToReturn.Id, cityToReturn.Description, cityToReturn.Name });
         }
     }
 }

@@ -37,6 +37,7 @@ namespace PluralSightCoreProject_CityInfo
             // services.AddDbContext<CityInfoContext>(o=> o.UseSqlServer(""));
 
             services.AddDbContext<CityInfoContext>();
+            services.AddScoped<ICityInfoRepository, CityInfoRepository>();
 #if DEBUG
             services.AddSingleton<IMailService, LocalMailService>();
 
