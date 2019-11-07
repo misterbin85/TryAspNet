@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PluralSightCoreProject_CityInfo.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using PluralSightCoreProject_CityInfo.Services;
 
@@ -14,11 +15,13 @@ namespace PluralSightCoreProject_CityInfo.Controllers
     {
         private readonly ILogger<PointsOfInterestController> _logger;
         private readonly IMailService _mailService;
+        private readonly ICityInfoRepository _cityInfoRepository;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService, ICityInfoRepository cityInfoRepository)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(ILogger<PointsOfInterestController>));
             _mailService = mailService ?? throw new ArgumentNullException(nameof(IMailService));
+            _cityInfoRepository = cityInfoRepository ?? throw new ArgumentNullException(nameof(ICityInfoRepository));
 
             _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
 
@@ -31,7 +34,6 @@ namespace PluralSightCoreProject_CityInfo.Controllers
         public IActionResult GetPointsOfInterest(int cityId)
         {
             #region Dummy
-
             // dummy statements to check exception handling
             if (cityId > 10)
             {
@@ -49,29 +51,44 @@ namespace PluralSightCoreProject_CityInfo.Controllers
 
             #endregion Dummy
 
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
+            if (!_cityInfoRepository.CityExists(cityId))
+            {
+                _logger.LogInformation($"City with id '{cityId}' wasn't found in the repository.");
+                return NotFound();
+            }
 
-            return city != null ? (IActionResult)Ok(city.PointsOfInterest) : NotFound();
+            var pointsOfInterestForCity = _cityInfoRepository.GetPointOfInterestForCity(cityId);
+            var results = pointsOfInterestForCity.Select(p => new PointOfInterestsDto {Id = p.Id, Name = p.Name, Description = p.Description}).ToList();
+
+            return Ok(results);
+
+
+
+
         }
 
         [HttpGet("{cityId}/pointsofinterest/{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int id)
         {
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
-            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(dto => dto.Id == id);
-
+            var pointOfInterest = _cityInfoRepository.GetPointOfInterestForCity(cityId, id);
             if (pointOfInterest == null)
             {
                 return NotFound();
             }
 
-            return Ok(pointOfInterest);
+            var result = new PointOfInterestsDto
+            {
+                Id =  pointOfInterest.Id,
+                Name =  pointOfInterest.Name,
+                Description = pointOfInterest.Description
+            };
+
+            return Ok(result);
         }
 
         [HttpPost("{cityId}/pointsofinterest")]

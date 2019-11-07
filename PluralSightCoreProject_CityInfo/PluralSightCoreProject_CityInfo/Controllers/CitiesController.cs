@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using PluralSightCoreProject_CityInfo.Models;
 using PluralSightCoreProject_CityInfo.Services;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
@@ -31,16 +33,35 @@ namespace PluralSightCoreProject_CityInfo.Controllers
         [HttpGet("{id}")]
         public IActionResult GetCity(int id, bool includePointsOfInterest = false)
         {
-            var cityToReturn = _cityInfoRepository.GetCity(id, includePointsOfInterest);
+            var city = _cityInfoRepository.GetCity(id, includePointsOfInterest);
             
-            if (cityToReturn == null)
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return includePointsOfInterest 
-                ? Ok(cityToReturn) 
-                : Ok(new { cityToReturn.Id, cityToReturn.Description, cityToReturn.Name });
+            if (includePointsOfInterest)
+            {
+                var cityToReturn = new CityDto
+                {
+                    Id = city.Id,
+                    Name = city.Name,
+                    Description = city.Description
+                };
+                foreach (var p in city.PointsOfInterest)
+                {
+                    cityToReturn.PointsOfInterest.Add(new PointOfInterestsDto
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Description = p.Description
+                    });
+                }
+
+                return Ok(cityToReturn);
+            }
+
+            return Ok(new { city.Id, city.Description, city.Name });
         }
     }
 }

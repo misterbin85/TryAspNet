@@ -5,6 +5,8 @@ namespace PluralSightCoreProject_CityInfo.Services
 {
     public interface ICityInfoRepository
     {
+        bool CityExists(int cityId);
+
         IEnumerable<City> GetCities();
 
         City GetCity(int cityId, bool includePointsOfInterest);
