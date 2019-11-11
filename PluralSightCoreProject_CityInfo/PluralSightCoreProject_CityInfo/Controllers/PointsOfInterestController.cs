@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PluralSightCoreProject_CityInfo.Entities;
 using PluralSightCoreProject_CityInfo.Models;
+using PluralSightCoreProject_CityInfo.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using PluralSightCoreProject_CityInfo.Services;
+using System.Threading.Tasks;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
 {
@@ -16,16 +18,16 @@ namespace PluralSightCoreProject_CityInfo.Controllers
         private readonly ILogger<PointsOfInterestController> _logger;
         private readonly IMailService _mailService;
         private readonly ICityInfoRepository _cityInfoRepository;
+        private readonly IMapper _mapper;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService, ICityInfoRepository cityInfoRepository)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService, ICityInfoRepository cityInfoRepository, IMapper mapper)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(ILogger<PointsOfInterestController>));
             _mailService = mailService ?? throw new ArgumentNullException(nameof(IMailService));
             _cityInfoRepository = cityInfoRepository ?? throw new ArgumentNullException(nameof(ICityInfoRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(IMapper));
 
             _logger.LogInformation($"Creating a controller: '{nameof(PointsOfInterestController)}");
-
-            // _logger = HttpContext.RequestServices.GetService(typeof(ILogger<PointsOfInterestController>)) as ILogger<PointsOfInterestController>;
         }
 
         #region Actions
@@ -34,12 +36,13 @@ namespace PluralSightCoreProject_CityInfo.Controllers
         public IActionResult GetPointsOfInterest(int cityId)
         {
             #region Dummy
+
             // dummy statements to check exception handling
             if (cityId > 10)
             {
                 try
                 {
-                    throw new Exception($"CityId is greater than 10. It is:{cityId}");
+                    throw new ArgumentOutOfRangeException($"CityId is greater than 10. It is:{cityId}");
                 }
                 catch (Exception ex)
                 {
@@ -58,13 +61,9 @@ namespace PluralSightCoreProject_CityInfo.Controllers
             }
 
             var pointsOfInterestForCity = _cityInfoRepository.GetPointOfInterestForCity(cityId);
-            var results = pointsOfInterestForCity.Select(p => new PointOfInterestsDto {Id = p.Id, Name = p.Name, Description = p.Description}).ToList();
+            var results = _mapper.Map<IEnumerable<PointOfInterestsDto>>(pointsOfInterestForCity);
 
             return Ok(results);
-
-
-
-
         }
 
         [HttpGet("{cityId}/pointsofinterest/{id}", Name = "GetPointOfInterest")]
@@ -81,47 +80,37 @@ namespace PluralSightCoreProject_CityInfo.Controllers
                 return NotFound();
             }
 
-            var result = new PointOfInterestsDto
-            {
-                Id =  pointOfInterest.Id,
-                Name =  pointOfInterest.Name,
-                Description = pointOfInterest.Description
-            };
-
-            return Ok(result);
+            return Ok(_mapper.Map<PointOfInterestsDto>(pointOfInterest));
         }
 
         [HttpPost("{cityId}/pointsofinterest")]
-        public IActionResult CreatePointOfInterest(int cityId, [FromBody] PointOfInterestForCreationDto dto)
+        public async Task<IActionResult> CreatePointOfInterest(int cityId, [FromBody] PointOfInterestForCreationDto dto)
         {
             if (dto == null)
             {
                 return BadRequest();
             }
 
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
-            var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
+            var newPointOfInterest = _mapper.Map<PointOfInterest>(dto);
+            _cityInfoRepository.AddPointOfInterestForCity(cityId, newPointOfInterest);
 
-            var newPointOfInterest = new PointOfInterestsDto
+            if (!(await _cityInfoRepository.Save()))
             {
-                Id = ++maxPointOfInterestId,
-                Name = dto.Name,
-                Description = dto.Description
-            };
+                return StatusCode(500, "Request wasn't saved.");
+            }
 
-            city.PointsOfInterest.Add(newPointOfInterest);
+            var createdPointOfInterest = _mapper.Map<PointOfInterestsDto>(newPointOfInterest);
 
-            return CreatedAtRoute("GetPointOfInterest", new { cityId = cityId, id = newPointOfInterest.Id }, newPointOfInterest);
+            return CreatedAtRoute("GetPointOfInterest", new { cityId = cityId, id = newPointOfInterest.Id }, createdPointOfInterest);
         }
 
         [HttpPut("{cityId}/pointsofinterest/{id}")]
-        public IActionResult UpdatePointOfInterest(int cityId, int id, [FromBody] PointOfInterestUpdateDto pointOfInterestUpdateDto)
+        public async Task<IActionResult> UpdatePointOfInterest(int cityId, int id, [FromBody] PointOfInterestUpdateDto pointOfInterestUpdateDto)
         {
             if (pointOfInterestUpdateDto == null)
             {
@@ -138,53 +127,48 @@ namespace PluralSightCoreProject_CityInfo.Controllers
                 return BadRequest(ModelState);
             }
 
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
-            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(dto => dto.Id == id);
+            var pointOfInterestEntity = _cityInfoRepository.GetPointOfInterestForCity(cityId, id);
 
-            if (pointOfInterest == null)
+            if (pointOfInterestEntity == null)
             {
                 return NotFound();
             }
 
-            pointOfInterest.Name = pointOfInterestUpdateDto.Name;
-            pointOfInterest.Description = pointOfInterestUpdateDto.Description;
+            _mapper.Map(pointOfInterestUpdateDto, pointOfInterestEntity);
+            if (!await _cityInfoRepository.Save())
+            {
+                return StatusCode(500, "Some error occured upon saving updated DTO.");
+            }
 
             return NoContent();
         }
 
         [HttpPatch("{cityId}/pointsofinterest/{id}")]
-        public IActionResult PartiallyUpdatePointOfInterest(int cityId, int id, [FromBody] JsonPatchDocument<PointOfInterestUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiallyUpdatePointOfInterest(int cityId, int id, [FromBody] JsonPatchDocument<PointOfInterestUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
                 return BadRequest();
             }
 
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
-            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(dto => dto.Id == id);
+            var pointOfInterest = _cityInfoRepository.GetPointOfInterestForCity(cityId, id);
 
             if (pointOfInterest == null)
             {
                 return NotFound();
             }
 
-            var pointOfInterestToPatch = new PointOfInterestUpdateDto
-            {
-                Name = pointOfInterest.Name,
-                Description = pointOfInterest.Description
-            };
+            var pointOfInterestToPatch = _mapper.Map<PointOfInterestUpdateDto>(pointOfInterest);
 
             patchDoc.ApplyTo(pointOfInterestToPatch, ModelState);
 
@@ -205,30 +189,38 @@ namespace PluralSightCoreProject_CityInfo.Controllers
                 return BadRequest(ModelState);
             }
 
-            pointOfInterest.Name = pointOfInterestToPatch.Name;
-            pointOfInterest.Description = pointOfInterestToPatch.Description;
+            _mapper.Map(pointOfInterestToPatch, pointOfInterest);
+
+            if (!await _cityInfoRepository.Save())
+            {
+                return StatusCode(500, "Some error occured upon saving patched DTO.");
+            }
 
             return NoContent();
         }
 
         [HttpDelete("{cityId}/pointsofinterest/{id}")]
-        public IActionResult DeletePointOfInterest(int cityId, int id)
+        public async Task<IActionResult> DeletePointOfInterest(int cityId, int id)
         {
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(dto => dto.Id == cityId);
-
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
                 return NotFound();
             }
 
-            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(dto => dto.Id == id);
+            var pointOfInterest = _cityInfoRepository.GetPointOfInterestForCity(cityId, id);
 
             if (pointOfInterest == null)
             {
                 return NotFound();
             }
 
-            city.PointsOfInterest.Remove(pointOfInterest);
+            _cityInfoRepository.DeletePointOfInterest(pointOfInterest);
+
+            if (!await _cityInfoRepository.Save())
+            {
+                return StatusCode(500, "Some error occured upon saving patched DTO.");
+            }
+
 
             return NoContent();
         }

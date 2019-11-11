@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Collections.Generic;
+using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using PluralSightCoreProject_CityInfo.Entities;
+using PluralSightCoreProject_CityInfo.Mappers;
 using PluralSightCoreProject_CityInfo.Models;
 using PluralSightCoreProject_CityInfo.Services;
 
@@ -38,6 +41,9 @@ namespace PluralSightCoreProject_CityInfo
 
             services.AddDbContext<CityInfoContext>();
             services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
+            services.AddSingleton(MapperProfile.Profile);
+
 #if DEBUG
             services.AddSingleton<IMailService, LocalMailService>();
 

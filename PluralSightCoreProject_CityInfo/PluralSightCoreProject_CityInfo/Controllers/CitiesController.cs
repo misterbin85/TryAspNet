@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PluralSightCoreProject_CityInfo.Models;
 using PluralSightCoreProject_CityInfo.Services;
+using System;
+using System.Collections.Generic;
 
 namespace PluralSightCoreProject_CityInfo.Controllers
 {
@@ -11,30 +12,27 @@ namespace PluralSightCoreProject_CityInfo.Controllers
     public class CitiesController : Controller
     {
         private readonly ICityInfoRepository _cityInfoRepository;
+        private readonly IMapper _mapper;
 
-        public CitiesController(ICityInfoRepository repository)
+        public CitiesController(ICityInfoRepository repository, IMapper mapper)
         {
             _cityInfoRepository = repository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(IMapper));
         }
 
         [HttpGet]
         public IActionResult GetCities()
         {
-           var cities = _cityInfoRepository.GetCities().Select(c => new
-            {
-                c.Id,
-                c.Description,
-                c.Name
-            });
+            var cities = _mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(_cityInfoRepository.GetCities());
 
-           return Ok(cities);
+            return Ok(cities);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetCity(int id, bool includePointsOfInterest = false)
         {
             var city = _cityInfoRepository.GetCity(id, includePointsOfInterest);
-            
+
             if (city == null)
             {
                 return NotFound();
@@ -42,26 +40,13 @@ namespace PluralSightCoreProject_CityInfo.Controllers
 
             if (includePointsOfInterest)
             {
-                var cityToReturn = new CityDto
-                {
-                    Id = city.Id,
-                    Name = city.Name,
-                    Description = city.Description
-                };
-                foreach (var p in city.PointsOfInterest)
-                {
-                    cityToReturn.PointsOfInterest.Add(new PointOfInterestsDto
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description
-                    });
-                }
+                var cityToReturn = _mapper.Map<CityDto>(city);
 
                 return Ok(cityToReturn);
             }
 
-            return Ok(new { city.Id, city.Description, city.Name });
+
+            return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(city));
         }
     }
 }

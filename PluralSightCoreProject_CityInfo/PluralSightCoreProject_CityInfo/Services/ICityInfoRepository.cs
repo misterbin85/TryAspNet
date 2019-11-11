@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PluralSightCoreProject_CityInfo.Entities;
 
 namespace PluralSightCoreProject_CityInfo.Services
@@ -14,5 +15,11 @@ namespace PluralSightCoreProject_CityInfo.Services
         IEnumerable<PointOfInterest> GetPointOfInterestForCity(int cityId);
 
         PointOfInterest GetPointOfInterestForCity(int cityId, int pointOfInterestId);
+
+        void AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+
+        void DeletePointOfInterest(PointOfInterest pointOfInterest);
+
+        Task<bool> Save();
     }
 }
