@@ -58,6 +58,8 @@
     <Compile Include="Extensions\IWebElementExtensions.cs" />
     <Compile Include="HttpClient\BaseHttpClient.cs" />
     <Compile Include="HttpClient\CheckoutClient.cs" />
+    <Compile Include="HttpClient\Models\CheckoutModel.cs" />
+    <Compile Include="HttpClient\Models\CheckoutResponse.cs" />
     <Compile Include="HttpClient\Models\CouponValueResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DirectoryUtils.cs" />

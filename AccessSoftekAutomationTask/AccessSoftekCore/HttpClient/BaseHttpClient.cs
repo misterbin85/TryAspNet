@@ -45,7 +45,7 @@ namespace AccessSoftekCore.HttpClient
             IRestRequest request = new RestRequest
             {
                 Method = Method.POST,
-                JsonSerializer = serializer,
+                //JsonSerializer = serializer,
                 Resource = resource
             };
 

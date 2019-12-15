@@ -21,6 +21,10 @@
         {
           "name": "coupon",
           "path": "coupon"
+        },
+        {
+          "name": "checkout",
+          "path": "checkout"
         }
       ]
     }
