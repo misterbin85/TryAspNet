@@ -29,7 +29,7 @@ namespace AccessSoftekCore.Extensions
             driver.Wait(waitTimeInSeconds).Until(d => (bool)((IJavaScriptExecutor)d).ExecuteScript("return document && document.readyState == 'complete'"));
         }
 
-        public static IWebElement WaitForElementToExist(this IWebDriver driver, By @by, int waitTimeInSeconds = DefaultTimeoutSeconds)
+        public static IWebElement WaitForElementToExist(this IWebDriver driver, By by, int waitTimeInSeconds = DefaultTimeoutSeconds)
         {
             return driver.Wait(waitTimeInSeconds).Until(ExpectedConditions.ElementExists(by));
         }
@@ -46,6 +46,14 @@ namespace AccessSoftekCore.Extensions
 								     return jQuery.active==0;";
 
             driver.Wait(waitTimeInSeconds).Until(d => (bool)((IJavaScriptExecutor)d).ExecuteScript(script));
+        }
+
+        public static bool WaitElementNotVisible(this IWebDriver driver, By by, int timeoutSeconds = DefaultTimeoutSeconds)
+        {
+            Thread.Sleep(500); // wait for element  to appear
+            driver.WaitForBrowserReadyState();
+
+            return driver.Wait(timeoutSeconds).Until(ExpectedConditions.InvisibilityOfElementLocated(by));
         }
     }
 }

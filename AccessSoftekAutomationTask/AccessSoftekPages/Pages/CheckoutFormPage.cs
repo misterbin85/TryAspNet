@@ -4,6 +4,7 @@ using System.Linq;
 using AccessSoftekCore.BasePageObjects;
 using AccessSoftekCore.Configs.AppConfigs;
 using AccessSoftekCore.Extensions;
+using AccessSoftekPages.Components;
 using OpenQA.Selenium;
 
 namespace AccessSoftekPages.Pages
@@ -14,6 +15,10 @@ namespace AccessSoftekPages.Pages
         public override Uri PageUri => TestAppConfig.MainPageUri;
 
         private readonly IWebElement _pageContainer;
+
+        private Lazy<CartComponent> cartComponent => new Lazy<CartComponent>(() => new CartComponent());
+
+        public CartComponent Cart => cartComponent.Value;
 
         private IWebElement SubmitForm => _pageContainer.FindElement(By.TagName("form"));
 
@@ -28,6 +33,8 @@ namespace AccessSoftekPages.Pages
 
         #endregion Constructor
 
+        #region Methods
+
         public void PressContinueToCheckout() => this.SubmitForm.FindElement(By.CssSelector("button[type='submit']")).ClickWait();
 
         public bool AllValidationMessagesAreDisplayed()
@@ -36,5 +43,12 @@ namespace AccessSoftekPages.Pages
         }
 
         public IEnumerable<string> GetValidationMessages => this.ValidationElements.Select(el => el.Text.Trim());
+
+        public bool CartIsLoaded()
+        {
+            return this.Cart.Container.Displayed && this.Cart.IsCartLoaded();
+        }
+
+        #endregion Methods
     }
 }

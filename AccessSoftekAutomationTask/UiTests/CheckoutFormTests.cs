@@ -44,5 +44,12 @@ namespace AccessSoftekAutomationTask.UiTests
                 this._checkoutFormPage.GetValidationMessages.Should().BeEquivalentTo(expectedMessages);
             }
         }
+
+        [Test]
+        [Description("‘Cart’ successfully loaded when user opens the page")]
+        public void TC_02_VerifyCartIsLoaded()
+        {
+            this._checkoutFormPage.CartIsLoaded().Should().BeTrue("'Cart' should be loaded upon page open");
+        }
     }
 }
