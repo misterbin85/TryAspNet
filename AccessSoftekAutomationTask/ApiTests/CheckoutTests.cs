@@ -1,4 +1,5 @@
 ﻿using AccessSoftekCore.HttpClient;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AccessSoftekAutomationTask.ApiTests
@@ -18,7 +19,14 @@ namespace AccessSoftekAutomationTask.ApiTests
         [Description("API correctly calculates discount percent")]
         public void TC_01_VerifyDiscountPercentCalculation()
         {
-            var a = _client.GetCouponDiscount("bla").Discount;
+            // arrange
+            var coupon = "Test coupon";
+
+            // act
+            var discount = _client.GetCouponDiscount(coupon).Discount;
+
+            // assert
+            discount.Should().Be(coupon.Length, "Discount amount is the length of coupon string");
         }
     }
 }

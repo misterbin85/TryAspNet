@@ -6,7 +6,7 @@ namespace AccessSoftekCore.HttpClient
 {
     public class CheckoutClient : BaseHttpClient
     {
-        protected override Uri BaseUri { get; set; } = ApiConfig.BaseUri;
+        protected override Uri BaseUri { get; set; } = new Uri("https://community.dynamics.com/"); //ApiConfig.BaseUri;
 
         public CouponValueResponse GetCouponDiscount(string coupon)
         {
