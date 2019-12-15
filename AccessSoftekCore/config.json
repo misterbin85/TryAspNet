@@ -1,0 +1,16 @@
+{
+  "browser": "chrome",
+  "environment": "qa",
+  "main-app": {
+    "name": "test",
+    "url": {
+      "authority": "https://qaautomation-test.s3-eu-west-1.amazonaws.com/",
+      "paths": [
+        {
+          "name": "index",
+          "path": "index.html"
+        }
+      ]
+    }
+  }
+}
