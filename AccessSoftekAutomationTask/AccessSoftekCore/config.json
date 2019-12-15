@@ -12,5 +12,17 @@
         }
       ]
     }
+  },
+  "api": {
+    "name": "testApi",
+    "url": {
+      "authority": "fg1ap986e9.execute-api.eu-west-1.amazonaws.com/Dev",
+      "Paths": [
+        {
+          "name": "coupon",
+          "path": "coupon"
+        }
+      ]
+    }
   }
 }

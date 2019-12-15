@@ -12,5 +12,8 @@ namespace AccessSoftekCore.Configs.Interfaces
 
         [Option(Alias = "main-app")]
         IApplication MainApplication { get; }
+
+        [Option(Alias = "api")]
+        IApplication Api { get; }
     }
 }
