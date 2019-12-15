@@ -58,6 +58,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Bogus">
+      <Version>28.4.4</Version>
+    </PackageReference>
     <PackageReference Include="FluentAssertions">
       <Version>5.9.0</Version>
     </PackageReference>

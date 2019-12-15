@@ -5,6 +5,7 @@ using AccessSoftekCore.BasePageObjects;
 using AccessSoftekCore.Configs.AppConfigs;
 using AccessSoftekCore.Extensions;
 using AccessSoftekPages.Components;
+using AccessSoftekPages.Models;
 using OpenQA.Selenium;
 
 namespace AccessSoftekPages.Pages
@@ -24,6 +25,17 @@ namespace AccessSoftekPages.Pages
 
         private IEnumerable<IWebElement> ValidationElements => SubmitForm.FindElements(By.CssSelector("div.row .invalid-feedback"));
 
+        #region Form inputs
+
+        private IWebElement FirstNameInput => SubmitForm.FindElement(By.Id("firstName"));
+        private IWebElement LastNameNameInput => SubmitForm.FindElement(By.Id("lastName"));
+        private IWebElement NameOnCardInput => SubmitForm.FindElement(By.Id("cc-name"));
+        private IWebElement CreditCardNumberInput => SubmitForm.FindElement(By.Id("cc-number"));
+        private IWebElement ExpirationInput => SubmitForm.FindElement(By.Id("cc-expiration"));
+        private IWebElement CvvInput => SubmitForm.FindElement(By.Id("cc-cvv"));
+
+        #endregion Form inputs
+
         #region Constructor
 
         public CheckoutFormPage()
@@ -35,7 +47,17 @@ namespace AccessSoftekPages.Pages
 
         #region Methods
 
-        public void PressContinueToCheckout() => this.SubmitForm.FindElement(By.CssSelector("button[type='submit']")).ClickWait();
+        public CheckoutFormPage PressContinueToCheckout()
+        {
+            this.SubmitForm.FindElement(By.CssSelector("button[type='submit']")).ClickWait();
+
+            return this;
+        }
+
+        public string GetSuccessMessage()
+        {
+            return Driver.WaitForElementToBeVisible(By.Id("success")).Text;
+        }
 
         public bool AllValidationMessagesAreDisplayed()
         {
@@ -47,6 +69,18 @@ namespace AccessSoftekPages.Pages
         public bool CartIsLoaded()
         {
             return this.Cart.Container.Displayed && this.Cart.IsCartLoaded();
+        }
+
+        public CheckoutFormPage FillTheForm(CheckoutFormModel model)
+        {
+            this.FirstNameInput.ClearSendKeys(model.FirstName);
+            this.LastNameNameInput.ClearSendKeys(model.LastName);
+            this.NameOnCardInput.ClearSendKeys(model.NameOnCard);
+            this.CreditCardNumberInput.ClearSendKeys(model.CreditCardNumber);
+            this.ExpirationInput.ClearSendKeys(model.Expiration);
+            this.CvvInput.ClearSendKeys(model.Cvv);
+
+            return this;
         }
 
         #endregion Methods

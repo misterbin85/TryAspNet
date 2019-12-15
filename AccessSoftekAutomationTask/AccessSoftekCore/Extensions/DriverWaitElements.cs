@@ -34,6 +34,11 @@ namespace AccessSoftekCore.Extensions
             return driver.Wait(waitTimeInSeconds).Until(ExpectedConditions.ElementExists(by));
         }
 
+        public static IWebElement WaitForElementToBeVisible(this IWebDriver driver, By by, int waitTimeInSeconds = DefaultTimeoutSeconds)
+        {
+            return driver.Wait(waitTimeInSeconds).Until(ExpectedConditions.ElementIsVisible(by));
+        }
+
         /// <summary>
         /// Waits for jQuery to complete
         /// </summary>
@@ -54,6 +59,18 @@ namespace AccessSoftekCore.Extensions
             driver.WaitForBrowserReadyState();
 
             return driver.Wait(timeoutSeconds).Until(ExpectedConditions.InvisibilityOfElementLocated(by));
+        }
+
+        public static T WaitFor<T>(this IWebDriver driver, Func<T> func, int timeoutInSeconds = DefaultTimeoutSeconds)
+        {
+            try
+            {
+                return driver.Wait(timeoutInSeconds).Until(drv => func());
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Message is:{e.Message} \r\n StackTrace is: {e.StackTrace}");
+            }
         }
     }
 }

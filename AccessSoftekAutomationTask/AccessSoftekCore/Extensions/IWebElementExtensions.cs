@@ -10,5 +10,13 @@ namespace AccessSoftekCore.Extensions
             element.Click();
             WebDriverFactory.WebDriver().WaitJQuery();
         }
+
+        public static IWebElement ClearSendKeys(this IWebElement element, string inputString)
+        {
+            element.Clear();
+            element.SendKeys(inputString);
+
+            return element;
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using AccessSoftekCore.Extensions;
+﻿using AccessSoftekCore.Extensions;
 using AccessSoftekCore.WebDriver;
 using NUnit.Framework;
 using OpenQA.Selenium;

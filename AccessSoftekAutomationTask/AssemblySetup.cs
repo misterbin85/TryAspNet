@@ -6,6 +6,7 @@ using AccessSoftekCore.WebDriver;
 using NUnit.Framework;
 
 // Base Setup Configuration for all assemblies
+[SetUpFixture]
 public class AssemblySetup
 {
     /// <summary>
