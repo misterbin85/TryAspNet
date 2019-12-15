@@ -28,11 +28,13 @@ namespace AccessSoftekPages.Pages
 
         #endregion Constructor
 
-        public void ClickContinueToCheckout() => this.SubmitForm.FindElement(By.CssSelector("button[type='submit']")).ClickWait();
+        public void PressContinueToCheckout() => this.SubmitForm.FindElement(By.CssSelector("button[type='submit']")).ClickWait();
 
         public bool AllValidationMessagesAreDisplayed()
         {
             return this.ValidationElements.All(el => el.Displayed);
         }
+
+        public IEnumerable<string> GetValidationMessages => this.ValidationElements.Select(el => el.Text.Trim());
     }
 }
