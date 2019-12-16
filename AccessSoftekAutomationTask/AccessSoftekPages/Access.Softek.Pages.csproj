@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{48B5FA5E-EB8E-4E8C-B7EA-F1DA14A05D65}</ProjectGuid>
+    <ProjectGuid>{650C6E3F-1A71-4448-8081-A0F1E6C2C64B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccessSoftekAutomationTask</RootNamespace>
-    <AssemblyName>AccessSoftekAutomationTask</AssemblyName>
+    <RootNamespace>AccessSoftekPages</RootNamespace>
+    <AssemblyName>AccessSoftekPages</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Executables\</OutputPath>
+    <OutputPath>..\Executables\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,42 +33,31 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\AccessSoftekAutomationTask\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiTests\CheckoutTests.cs" />
-    <Compile Include="AssemblySetup.cs" />
-    <Compile Include="BaseTest.cs" />
+    <Compile Include="Components\CartComponent.cs" />
+    <Compile Include="Models\CheckoutFormModel.cs" />
+    <Compile Include="Pages\CheckoutFormPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UiTests\CheckoutFormTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="AccessSoftekCore\AccessSoftekCore.csproj">
+    <ProjectReference Include="..\AccessSoftekCore\Access.Softek.Core.csproj">
       <Project>{a04e89de-3e56-4c12-a186-2373b446cbe6}</Project>
-      <Name>AccessSoftekCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="AccessSoftekPages\AccessSoftekPages.csproj">
-      <Project>{650c6e3f-1a71-4448-8081-a0f1e6c2c64b}</Project>
-      <Name>AccessSoftekPages</Name>
+      <Name>Access.Softek.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus">
-      <Version>28.4.4</Version>
-    </PackageReference>
-    <PackageReference Include="FluentAssertions">
-      <Version>5.9.0</Version>
-    </PackageReference>
-    <PackageReference Include="NUnit">
-      <Version>3.12.0</Version>
-    </PackageReference>
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
