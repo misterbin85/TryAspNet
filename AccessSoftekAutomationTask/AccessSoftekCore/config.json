@@ -1,0 +1,32 @@
+{
+  "browser": "chrome",
+  "environment": "qa",
+  "main-app": {
+    "name": "test",
+    "url": {
+      "authority": "qaautomation-test.s3-eu-west-1.amazonaws.com",
+      "Paths": [
+        {
+          "name": "index",
+          "path": "index.html"
+        }
+      ]
+    }
+  },
+  "api": {
+    "name": "testApi",
+    "url": {
+      "authority": "fg1ap986e9.execute-api.eu-west-1.amazonaws.com/Dev",
+      "Paths": [
+        {
+          "name": "coupon",
+          "path": "coupon"
+        },
+        {
+          "name": "checkout",
+          "path": "checkout"
+        }
+      ]
+    }
+  }
+}
