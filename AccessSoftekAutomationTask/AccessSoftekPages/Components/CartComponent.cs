@@ -12,18 +12,22 @@ namespace AccessSoftekPages.Components
 
         public IWebElement Container => Driver.FindElement(ContainerBy);
 
+        #region Constructor
+
         public CartComponent()
         {
             Driver.WaitFor(() => this.IsCartLoaded().Equals(true));
         }
 
-        public bool IsCartLoaded() => ((IWrapsDriver)Container).WrappedDriver.WaitElementNotVisible(By.CssSelector("li#loading"));
+        #endregion Constructor
 
         private IWebElement PromoCodeInput => Container.FindElement(By.Id("promoCode"));
 
         private IWebElement RedeemButton => Container.FindElement(By.CssSelector("button[type='submit']"));
 
         #region Methods
+
+        public bool IsCartLoaded() => ((IWrapsDriver)Container).WrappedDriver.WaitElementNotVisible(By.CssSelector("li#loading"));
 
         public decimal GetTotal() => Convert.ToDecimal(Container.FindElement(By.Id("totalAmount")).Text.Trim());
 

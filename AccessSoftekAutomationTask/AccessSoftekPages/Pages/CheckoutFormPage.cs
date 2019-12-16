@@ -17,9 +17,13 @@ namespace AccessSoftekPages.Pages
 
         private readonly IWebElement _pageContainer;
 
+        #region Lazy
+
         private Lazy<CartComponent> cartComponent => new Lazy<CartComponent>(() => new CartComponent());
 
         public CartComponent Cart => cartComponent.Value;
+
+        #endregion Lazy
 
         private IWebElement SubmitForm => _pageContainer.FindElement(By.TagName("form"));
 

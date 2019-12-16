@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace AccessSoftekCore.Utils
 {
-    internal class DirectoryUtils
+    public class DirectoryUtils
     {
         public static string Executables()
         {
