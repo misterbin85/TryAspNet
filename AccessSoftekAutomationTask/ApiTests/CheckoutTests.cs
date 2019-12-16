@@ -43,7 +43,7 @@ namespace AccessSoftekAutomationTask.ApiTests
                 LastName = faker.Name.LastName(),
                 PaymentMethod = "Credit Card",
                 NameOnCard = faker.Internet.UserName(),
-                CreditCardNumber = faker.Random.Number(17, 99).ToString(),
+                CreditCardNumber = string.Join(string.Empty, faker.Random.Digits(17)),
                 Expiration = faker.Date.Future(1).ToString("MM/yyyy"),
                 Cvv = faker.Finance.CreditCardCvv()
             });
@@ -53,7 +53,7 @@ namespace AccessSoftekAutomationTask.ApiTests
                 LastName = faker.Name.LastName(),
                 PaymentMethod = "Credit Card",
                 NameOnCard = faker.Internet.UserName(),
-                CreditCardNumber = faker.Random.Number(15).ToString(),
+                CreditCardNumber = string.Join(string.Empty, faker.Random.Digits(15)),
                 Expiration = faker.Date.Future(1).ToString("MM/yyyy"),
                 Cvv = faker.Finance.CreditCardCvv()
             });
